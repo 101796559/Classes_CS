@@ -16,6 +16,15 @@ namespace Task02
                 new Person("Sanjay", "Jagannadhan", new DateTime(1994, 02, 15), 190),
             };
 
+            // Compares the height of each student in the "people" list and prints the results.
+            new Program().CompareStudentHeights(people);
+
+            /* 
+            "Enrolls" each student in one of the above subjects, gives them a grade between 50 & 100,
+            unenrolls William from whatever they're enrolled in,
+            checks each student's enrolled subjects.
+            This woud be done less randomly by an actual user, I suppose.
+            */
             new Program().UpdateGrades(people);
         }
 
@@ -31,15 +40,10 @@ namespace Task02
                     }
                 }
                 catch {
-                    try {
-                        int x = i;
-                        while (x > 0) {
-                            System.Console.WriteLine(person.GetHeightDifference(people[i-x]));
-                            x--;
-                        }
-                    }
-                    catch {
-                        continue;
+                    int x = i;
+                    while (x > 0) {
+                        System.Console.WriteLine(person.GetHeightDifference(people[i-x]));
+                        x--;
                     }
                 }
             }
@@ -47,9 +51,21 @@ namespace Task02
 
         public void UpdateGrades(List<Person> students) {
             foreach (Person student in students) {
+                Subject subject;
+                var check = new Random().Next(0,10);
+                if (check > 7) {
+                    subject = Program.physics;
+                }
+                else if (check > 4) {
+                    subject = Program.math;
+                }
+                else {
+                    subject = Program.compSci;
+                }
                 System.Console.WriteLine(student.GetFullName());
-                student.AddSubject(Program.physics);
-                student.AddGrades(Program.physics, new Random().Next(50,100));
+                student.AddSubject(subject);
+                student.AddGrades(subject, new Random().Next(50,100));
+                students[0].RemoveSubject(subject);
                 System.Console.WriteLine(student.GetSubjects());
             }
         }
